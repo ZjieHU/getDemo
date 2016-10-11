@@ -18,6 +18,7 @@
 <style>
 bode {
 	background: #FFF;
+	text-align: center;
 }
 
 h2 {
@@ -32,6 +33,7 @@ h2 {
 }
 
 #right_head {
+	margin-top: 10px;
 	margin-left: 60px;
 	float: left;
 }
@@ -39,18 +41,25 @@ h2 {
 </head>
 <body>
 	<div style="width: 100%; height: 77px; border-bottom: #ccc solid 1px;">
-		<h2 style="font-family:"YaHei"; font-weight:bold;">GetDemo</h2>
-		<div id="search_div">
-			<div class="col-lg-6">
-				<div class="input-group">
-					<form action="GetDemo" method="get">
-						<input type="text" class="form-control" name="keyword"> <span
-							class="input-group-btn">
-							<button class="btn btn-default" type="button"
-								style="font-family:"YaHei";">搜索</button>
-						</span>
-					</form>
-				</div>
+		<div style="font-family:'YaHei'; font-size:30px; font-weight:bold; width:100px; float:left;">
+			GetDemo
+		</div>
+		<div style="width:500px; float:left; margin-left:80px;">
+			<div style="padding: 10px 10px 10px;">
+				<form class="bs-example bs-example-form" role="form">
+					<div class="row">
+						<div class="col-lg-6">
+							<div class="input-group">
+								<input type="text" style="width:400px;" class="form-control">
+								<span class="input-group-btn">
+									<button class="btn btn-default" type="button">
+										搜索
+									</button>
+								</span>
+							</div><!-- /input-group -->
+						</div><!-- /.col-lg-6 -->
+					</div><!-- /.row -->
+				</form>
 			</div>
 		</div>
 		<div id="right_head">
@@ -103,7 +112,10 @@ h2 {
 			<%=request.getAttribute("bar")%>
 		</ul>
 	</div>
-	<hr />
+	<hr>
+	<div style="width:100%; margin-right: auto; margin-left: auto; height:20px;
+	width:400px; vertical-align:middle;	line-height:20px;">
 	&copy; 2016 GetDemo.com.cn
+	</div>
 </body>
 </html>
