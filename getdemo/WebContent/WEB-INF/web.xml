@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app version="2.5" xmlns="http://java.sun.com/xml/ns/javaee"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee 
+	http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">
+	<display-name></display-name>
+
+	<!-- 搜索列表 -->
+	<servlet>
+		<servlet-name>GetDemo</servlet-name>
+		<servlet-class>com.getdemo.servlet.GetDemo</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>GetDemo</servlet-name>
+		<url-pattern>/GetDemo</url-pattern>
+	</servlet-mapping>
+
+	<!-- 登录 -->
+	<servlet>
+		<servlet-name>Login</servlet-name>
+		<servlet-class>com.getdemo.servlet.Login</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>Login</servlet-name>
+		<url-pattern>/Login</url-pattern>
+	</servlet-mapping>
+
+	<!-- 注册 -->
+	<servlet>
+		<servlet-name>Register</servlet-name>
+		<servlet-class>com.getdemo.servlet.Register</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>Register</servlet-name>
+		<url-pattern>/Register</url-pattern>
+	</servlet-mapping>
+
+	<!-- 设置密码 -->
+	<servlet>
+		<servlet-name>SetPWD</servlet-name>
+		<servlet-class>com.getdemo.servlet.SetPWD</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>SetPWD</servlet-name>
+		<url-pattern>/SetPWD</url-pattern>
+	</servlet-mapping>
+
+	<!-- 验证码 -->
+	<servlet>
+		<servlet-name>VerCode</servlet-name>
+		<servlet-class>com.getdemo.servlet.VerCode</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>VerCode</servlet-name>
+		<url-pattern>/VerCode</url-pattern>
+	</servlet-mapping>
+
+	<!-- 忘记密码 -->
+	<servlet>
+		<servlet-name>ForgetPWD</servlet-name>
+		<servlet-class>com.getdemo.servlet.ForgetPWD</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>ForgetPWD</servlet-name>
+		<url-pattern>/ForgetPWD</url-pattern>
+	</servlet-mapping>
+
+	<!-- 上传Demo -->
+	<servlet>
+		<servlet-name>UpdateDemo</servlet-name>
+		<servlet-class>com.getdemo.servlet.UpdateDemo</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>UpdateDemo</servlet-name>
+		<url-pattern>/UpdateDemo</url-pattern>
+	</servlet-mapping>
+
+	<!-- 主页 -->
+	<welcome-file-list>
+		<welcome-file>GetDemo</welcome-file>
+	</welcome-file-list>
+
+</web-app>
