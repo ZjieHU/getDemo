@@ -13,19 +13,21 @@ import com.getdemo.bean.Demo;
 import com.getdemo.bean.User;
 
 public class Dao {
-
+	
+	private static Connection conn;
+	
 	/**
-	 * »ñÈ¡Êý¾Ý¿âÁ¬½Ó
+	 * ï¿½ï¿½È¡ï¿½ï¿½ï¿½Ý¿ï¿½ï¿½ï¿½ï¿½ï¿½
 	 * 
-	 * @return Connection ¶ÔÏó
+	 * @return Connection ï¿½ï¿½ï¿½ï¿½
 	 */
 	public static Connection getConnection() {
-		Connection conn = null;
+		conn = null;
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
-			String url = "jdbc:mysql://123.56.79.14:3306/getdemo";
+			String url = "jdbc:mysql://localhost:3306/getdemo";
 			String user = "root";
-			String password = "QAZwsxedcrfv123";
+			String password = "root";
 			conn = DriverManager.getConnection(url, user, password);
 		} catch (ClassNotFoundException e) {
 			// TODO Auto-generated catch block
@@ -37,11 +39,21 @@ public class Dao {
 		return conn;
 	}
 
+	public static void closeConnection() {
+		try {
+			if(!conn.isClosed())
+				conn.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
 	/**
-	 * ·ÖÒ³²éÑ¯ËùÓÐÉÌÆ·ÐÅÏ¢
+	 * ï¿½ï¿½Ò³ï¿½ï¿½Ñ¯ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ·ï¿½ï¿½Ï¢
 	 * 
 	 * @param page
-	 *            Ò³Êý
+	 *            Ò³ï¿½ï¿½
 	 * @return List<Product>
 	 */
 	public List<Demo> find(int page, String keyword, String tag) {
@@ -60,10 +72,10 @@ public class Dao {
 				p.setDescribe(rs.getString("Describe"));
 				p.setDownCount(rs.getInt("DownCount"));
 
-				if (tag.equals("Á¢¼´ÏÂÔØ")) {
+				if (tag.equals("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½")) {
 					p.setDownName(rs.getString("DownURL"));
 				} else {
-					p.setDownName("recharge¡£jsp");
+					p.setDownName("rechargeï¿½ï¿½jsp");
 				}
 
 				p.setUpdateTime(rs.getString("UpdateTime"));
@@ -81,9 +93,9 @@ public class Dao {
 	}
 
 	/**
-	 * ²éÑ¯×Ü¼ÇÂ¼Êý
+	 * ï¿½ï¿½Ñ¯ï¿½Ü¼ï¿½Â¼ï¿½ï¿½
 	 * 
-	 * @return ×Ü¼ÇÂ¼Êý
+	 * @return ï¿½Ü¼ï¿½Â¼ï¿½ï¿½
 	 */
 	public int findCount(String keyword) {
 		int count = 0;
@@ -93,7 +105,7 @@ public class Dao {
 			Statement sta = conn.createStatement();
 			ResultSet rs = sta.executeQuery(sql);
 			if (rs.next()) {
-				count = rs.getInt(1); // ¶Ô×Ü¼ÇÂ¼Êý¸³Öµ
+				count = rs.getInt(1); // ï¿½ï¿½ï¿½Ü¼ï¿½Â¼ï¿½ï¿½ï¿½ï¿½Öµ
 			}
 			rs.close();
 			conn.close();
@@ -101,12 +113,12 @@ public class Dao {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return count; // ·µ»Ø×Ü¼ÇÂ¼Êý
+		return count; // ï¿½ï¿½ï¿½ï¿½ï¿½Ü¼ï¿½Â¼ï¿½ï¿½
 	}
 
 	/**
 	 * 
-	 * ×¢²á
+	 * ×¢ï¿½ï¿½
 	 * 
 	 * @param user
 	 */
@@ -127,9 +139,9 @@ public class Dao {
 	}
 
 	/**
-	 * ²é³öÃÜÂë
+	 * ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	 * 
-	 * @return ÃÜÂë
+	 * @return ï¿½ï¿½ï¿½ï¿½
 	 */
 	public static String getPWD(String email) {
 
@@ -153,9 +165,9 @@ public class Dao {
 	}
 
 	/**
-	 * ²é³öÑéÖ¤Âë
+	 * ï¿½ï¿½ï¿½ï¿½ï¿½Ö¤ï¿½ï¿½
 	 * 
-	 * @return ÑéÖ¤Âë
+	 * @return ï¿½ï¿½Ö¤ï¿½ï¿½
 	 */
 	public static String getVerCode(String email) {
 
@@ -175,12 +187,12 @@ public class Dao {
 			e.printStackTrace();
 		}
 
-		return vercode; // ·µ»ØÑéÖ¤Âë
+		return vercode; // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö¤ï¿½ï¿½
 	}
 
 	/**
 	 * 
-	 * ÉèÖÃÃÜÂë
+	 * ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	 * 
 	 * @param user
 	 */
@@ -200,7 +212,7 @@ public class Dao {
 	}
 
 	/**
-	 * ÓÊÏäÊÇ·ñ´æÔÚ
+	 * ï¿½ï¿½ï¿½ï¿½ï¿½Ç·ï¿½ï¿½ï¿½ï¿½
 	 * 
 	 * @return
 	 */
@@ -212,7 +224,7 @@ public class Dao {
 			Statement sta = conn.createStatement();
 			ResultSet rs = sta.executeQuery(sql);
 			if (rs.next()) {
-				count = rs.getInt(1); // ¶Ô×Ü¼ÇÂ¼Êý¸³Öµ
+				count = rs.getInt(1); // ï¿½ï¿½ï¿½Ü¼ï¿½Â¼ï¿½ï¿½ï¿½ï¿½Öµ
 			}
 			rs.close();
 			conn.close();
@@ -235,7 +247,7 @@ public class Dao {
 
 	/**
 	 * 
-	 * ÉèÖÃÑéÖ¤Âë
+	 * ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö¤ï¿½ï¿½
 	 * 
 	 * @param user
 	 */
@@ -255,7 +267,7 @@ public class Dao {
 	}
 
 	/**
-	 * ÊÇ·ñ³äÖµÓÃ»§
+	 * ï¿½Ç·ï¿½ï¿½Öµï¿½Ã»ï¿½
 	 * 
 	 * @return
 	 */
@@ -291,7 +303,7 @@ public class Dao {
 
 	/**
 	 * 
-	 * ÉÏ´«Demo
+	 * ï¿½Ï´ï¿½Demo
 	 * 
 	 * @param user
 	 */

@@ -39,7 +39,16 @@ h2 {
 }
 </style>
 </head>
-<body>
+<body onload="getInfo()">
+	<script type="text/javascript">
+		function getInfo() {
+			var cookie = null;
+			cookie = document.cookie.split(";")[0].split("=")[1];
+			if(cookie == null) {
+				
+			}
+		}
+	</script>
 	<div style="width: 100%; height: 77px; border-bottom: #ccc solid 1px;">
 		<div style="font-family:'YaHei'; font-size:30px; font-weight:bold; width:100px; float:left;">
 			GetDemo
@@ -78,6 +87,7 @@ h2 {
 	</div>
 	<%
 		List<Demo> list = (List<Demo>) request.getAttribute("list");
+		if(list != null)
 		for (Demo p : list) {
 	%>
 	<div

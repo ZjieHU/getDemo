@@ -1,62 +1,84 @@
 package com.getdemo.servlet;
 
 import java.io.IOException;
-import java.sql.SQLException;
+import java.io.OutputStream;
+import java.io.PrintWriter;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import javax.servlet.ServletException;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.getdemo.bean.User;
-import com.getdemo.common.Get;
 import com.getdemo.dao.Dao;
-import com.getdemo.email.SendEmail;
 
-@SuppressWarnings("serial")
 public class Register extends HttpServlet {
 
-	public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	@Override
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		response.setContentType("text/html");
 		request.setCharacterEncoding("utf-8");
 		response.setCharacterEncoding("utf-8");
 
-		// »ñÈ¡¹Ø¼ü´Ê
+		// é‘¾å³°å½‡é™å‚›æšŸ
 		String email = request.getParameter("email");
-
-		// ÓÊÏäÊÇ·ñ´æÔÚ
-		if (Dao.checkEmail(email) == true) {
-
-			// ÖØ¶¨Î»
-			request.getRequestDispatcher("login.jsp").forward(request, response);
-
-		} else {
-
-			// Ëæ»úÑéÖ¤Âë
-			String randomString = Get.getRandomString(32);
-
+		String pwd = request.getParameter("pwd");
+		
+		
+		if(Dao.checkEmail(email)) {
+			//æ¿¡å‚›ç‰é¢ã„¦åŸ›ç€›æ¨ºæ¹ª
+			System.out.println("ç”¨æˆ·å·²ç»å­˜åœ¨");
+			
+			PrintWriter pw = response.getWriter();
+			
+			pw.println(0);
+		}else {
 			User user = new User();
+			
 			user.setEmail(email);
-			user.setVercode(randomString);
-			user.setDownOK("0");
-			user.setTime(Get.getTime());
-
-			// ×¢²áÕËºÅ
+			
+			user.setPwd(pwd);
+			
+			user.setTime(getCurrentDate());
+			
 			Dao.register(user);
-
-			// ·¢ËÍÓÊ¼ş
-			try {
-				new SendEmail().runSendEmail(email, "http://www.getdemo.com.cn/VerCode?email=" + email + "&vercode=" + randomString);
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-
-			// ÖØ¶¨Î»
-			request.getRequestDispatcher("tip.jsp").forward(request, response);
-
+			
+			PrintWriter pWriter = response.getWriter();
+			
+			pWriter.println(1); //é¢ã„¦åŸ›é´æ„¬å§›é§è¯²ç¶
+			
+			setReffer(response,user.getEmail(),user.getPwd());
 		}
-
 	}
-
+	
+	private String getCurrentDate() {
+		Date now = new Date(); 
+	
+		SimpleDateFormat dateFormat = new 
+				SimpleDateFormat("yyyy/MM/dd HH:mm:ss");//é™îˆ™äº’é‚é€›ç©¶é¦é¢æ…¨é€è§„æ£©éˆç†¸ç‰¸å¯®ï¿½
+	
+		return dateFormat.format(now);
+	}
+	
+	private void setReffer(final HttpServletResponse response,
+			final String userName, final String password) {
+		final String sSession = userName;
+		
+	    Cookie oItem;  
+	    
+	    oItem = new Cookie("SSO", sSession);  
+	    
+	    oItem.setMaxAge(3600 * 24 * 365);
+	    
+	    response.addCookie(oItem);
+	}
 }
