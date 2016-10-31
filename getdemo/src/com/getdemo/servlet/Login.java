@@ -21,31 +21,17 @@ public class Login extends HttpServlet {
 		// 获取关键词
 		String email = request.getParameter("email");
 		String pwd = request.getParameter("pwd");
-
-		if (Dao.checkEmail(email) == true) {
-
-			// 根据邮箱查出密码
-			if (Dao.getPWD(email).equals(Get.getMD5(pwd))) {
-
-				// HttpSession
-				HttpSession session = request.getSession();
-				session.setAttribute("email", email);
-
-				// 重定位
+		
+		String checkpwd = Dao.getPWD(email);
+		
+		if(checkpwd == null) {
+			request.getRequestDispatcher("login.jsp").forward(request, response);
+		}
+		
+		else{
 				request.getRequestDispatcher("/GetDemo").forward(request, response);
 
-			} else {
-				// 用户名或密码不正确
-				request.getRequestDispatcher("login.jsp").forward(request, response);
-
-			}
-
-		} else {
-			// 邮箱不存在
-			request.getRequestDispatcher("login.jsp").forward(request, response);
-
 		}
-
 	}
 
 }

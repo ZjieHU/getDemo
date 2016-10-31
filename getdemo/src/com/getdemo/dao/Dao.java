@@ -17,9 +17,9 @@ public class Dao {
 	private static Connection conn;
 	
 	/**
-	 * ��ȡ���ݿ�����
+	 * 锟斤拷取锟斤拷锟捷匡拷锟斤拷锟斤拷
 	 * 
-	 * @return Connection ����
+	 * @return Connection 锟斤拷锟斤拷
 	 */
 	public static Connection getConnection() {
 		conn = null;
@@ -50,52 +50,75 @@ public class Dao {
 	}
 	
 	/**
-	 * ��ҳ��ѯ������Ʒ��Ϣ
+	 * 锟斤拷页锟斤拷询锟斤拷锟斤拷锟斤拷品锟斤拷息
 	 * 
 	 * @param page
-	 *            ҳ��
+	 *            页锟斤拷
 	 * @return List<Product>
 	 */
 	public List<Demo> find(int page, String keyword, String tag) {
 		List<Demo> list = new ArrayList<Demo>();
+		
 		Connection conn = getConnection();
-		String sql = "select * from list WHERE `Describe` LIKE '%" + keyword + "%' order by id desc limit ?,?";
+		
+		String sql = new String();
+		
+		if(keyword == null) {
+			sql = "SELECT * FROM list ORDER BY DownCount DESC";
+		}else {
+			sql = "SELECT * FROM list WHERE `Name` LIKE '%"+keyword+"%' ORDER BY DownCount DESC";
+		}
+		
 		try {
-			PreparedStatement ps = conn.prepareStatement(sql);
-			ps.setInt(1, (page - 1) * Demo.PAGE_SIZE);
-			ps.setInt(2, Demo.PAGE_SIZE);
-			ResultSet rs = ps.executeQuery();
-			while (rs.next()) {
-				Demo p = new Demo();
-				p.setType(rs.getString("Type"));
-				p.setName(rs.getString("Name"));
-				p.setDescribe(rs.getString("Describe"));
-				p.setDownCount(rs.getInt("DownCount"));
-
-				if (tag.equals("��������")) {
-					p.setDownName(rs.getString("DownURL"));
-				} else {
-					p.setDownName("recharge��jsp");
+			Statement st = conn.createStatement();
+			
+			ResultSet rs = st.executeQuery(sql);
+			
+			while(rs.next()) {
+				Demo demo = new Demo();
+				
+				demo.setAuthor(rs.getString("Author"));
+				
+				String desc = rs.getString("Describe");
+				if(desc.length() > 180) {
+					demo.setDescribe(desc.substring(0, 100)+"...");
+				}else {
+					demo.setDescribe(desc);
 				}
-
-				p.setUpdateTime(rs.getString("UpdateTime"));
-				p.setAuthor(rs.getString("Author"));
-				p.setDownOK(tag);
-				list.add(p);
+				
+				demo.setDownCount(rs.getInt("DownCount"));
+				
+				demo.setDownName(rs.getString("DownName"));
+				
+				demo.setFunction(rs.getString("Function"));
+				
+				demo.setName(rs.getString("Name"));
+				
+				demo.setPrice(rs.getInt("price"));
+				
+				demo.setTime(rs.getString("Time"));
+				
+				demo.setType(rs.getString("Type"));
+				
+				demo.setUpdateTime(rs.getString("UpdateTime"));
+				
+				demo.setId(rs.getInt("id"));
+				
+				demo.setPrictureurl(rs.getString("pictureurl"));
+				
+				list.add(demo);
 			}
-			ps.close();
-			conn.close();
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
 		return list;
 	}
 
 	/**
-	 * ��ѯ�ܼ�¼��
+	 * 锟斤拷询锟杰硷拷录锟斤拷
 	 * 
-	 * @return �ܼ�¼��
+	 * @return 锟杰硷拷录锟斤拷
 	 */
 	public int findCount(String keyword) {
 		int count = 0;
@@ -105,7 +128,7 @@ public class Dao {
 			Statement sta = conn.createStatement();
 			ResultSet rs = sta.executeQuery(sql);
 			if (rs.next()) {
-				count = rs.getInt(1); // ���ܼ�¼����ֵ
+				count = rs.getInt(1); // 锟斤拷锟杰硷拷录锟斤拷锟斤拷值
 			}
 			rs.close();
 			conn.close();
@@ -113,19 +136,19 @@ public class Dao {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return count; // �����ܼ�¼��
+		return count; // 锟斤拷锟斤拷锟杰硷拷录锟斤拷
 	}
 
 	/**
 	 * 
-	 * ע��
+	 * 注锟斤拷
 	 * 
 	 * @param user
 	 */
 	public static void register(User user) {
 
 		Connection conn = getConnection();
-		String sql = "INSERT INTO user (Email,PWD,VerCode,DownOK,Time) VALUES ('" + user.getEmail() + "','','"
+		String sql = "INSERT INTO user (Email,PWD,VerCode,DownOK,Time) VALUES ('" + user.getEmail() + "','"+user.getPwd()+"','"
 				+ user.getVercode() + "','" + user.getDownOK() + "','" + user.getTime() + "')";
 
 		try {
@@ -139,9 +162,9 @@ public class Dao {
 	}
 
 	/**
-	 * �������
+	 * 锟斤拷锟斤拷锟斤拷锟�
 	 * 
-	 * @return ����
+	 * @return 锟斤拷锟斤拷
 	 */
 	public static String getPWD(String email) {
 
@@ -165,9 +188,9 @@ public class Dao {
 	}
 
 	/**
-	 * �����֤��
+	 * 锟斤拷锟斤拷锟街わ拷锟�
 	 * 
-	 * @return ��֤��
+	 * @return 锟斤拷证锟斤拷
 	 */
 	public static String getVerCode(String email) {
 
@@ -187,12 +210,12 @@ public class Dao {
 			e.printStackTrace();
 		}
 
-		return vercode; // ������֤��
+		return vercode; // 锟斤拷锟斤拷锟斤拷证锟斤拷
 	}
 
 	/**
 	 * 
-	 * ��������
+	 * 锟斤拷锟斤拷锟斤拷锟斤拷
 	 * 
 	 * @param user
 	 */
@@ -212,7 +235,7 @@ public class Dao {
 	}
 
 	/**
-	 * �����Ƿ����
+	 * 锟斤拷锟斤拷锟角凤拷锟斤拷锟�
 	 * 
 	 * @return
 	 */
@@ -224,7 +247,7 @@ public class Dao {
 			Statement sta = conn.createStatement();
 			ResultSet rs = sta.executeQuery(sql);
 			if (rs.next()) {
-				count = rs.getInt(1); // ���ܼ�¼����ֵ
+				count = rs.getInt(1); // 锟斤拷锟杰硷拷录锟斤拷锟斤拷值
 			}
 			rs.close();
 			conn.close();
@@ -247,7 +270,7 @@ public class Dao {
 
 	/**
 	 * 
-	 * ������֤��
+	 * 锟斤拷锟斤拷锟斤拷证锟斤拷
 	 * 
 	 * @param user
 	 */
@@ -267,7 +290,7 @@ public class Dao {
 	}
 
 	/**
-	 * �Ƿ��ֵ�û�
+	 * 锟角凤拷锟街碉拷没锟�
 	 * 
 	 * @return
 	 */
@@ -303,7 +326,7 @@ public class Dao {
 
 	/**
 	 * 
-	 * �ϴ�Demo
+	 * 锟较达拷Demo
 	 * 
 	 * @param user
 	 */

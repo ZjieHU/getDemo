@@ -51,7 +51,7 @@ div span button {font-family:'微软雅黑';color:#666; font-size:18px;}
 		 	<input type="submit" id="sub" value="注册" style="width:250px;color:#fff; background:#6CBD50" class="btn btn-default" />
 		</div>
 		<div style="margin-top:60px; background-color: transparent;">
-			<button type="button" style="width:320px; color:#666; background-color: transparent;" class="btn btn-default">返回登录界面</button>
+			<button onclick="linktogetdemo();" type="button" style="width:320px; color:#666; background-color: transparent;" class="btn btn-default">返回登录界面</button>
 		</div>
 	</div>
 	<script type="text/javascript">
@@ -66,11 +66,14 @@ div span button {font-family:'微软雅黑';color:#666; font-size:18px;}
 						alert('用户已存在');
 					}else if(data == 1) {
 						alert('注册成功');
-						window.location(localhost+":8080/getdemo");
+						window.location.href = localhost+":8080/getdemo";
 					}
 				});
 			});
 		});
+		function linktogetdemo() {
+			window.location.href = localhost+":8080/getdemo";
+		}
 	</script>
 </body>
 </html>

@@ -53,27 +53,14 @@ div span button {font-family:'微软雅黑';color:#666; font-size:18px;}
 			</form>
 		</div>
 		<div style="margin-top:60px; background-color: transparent;">
-			<button type="button" style="width:320px; color:#666; background-color: transparent;" class="btn btn-default">创建账号</button>
+			<button type="button" onclick="linktoregister();" style="width:320px; color:#666; background-color: transparent;" class="btn btn-default">创建账号</button>
 		</div>
 	</div>
-	
+	<script type="text/javascript">
+		localhost = "http://localhost";
+		function linktoregister() {
+			window.location.href = localhost+":8080/getdemo/register.jsp";
+		}
+	</script>
 </body>
-
-<script>
-	function GetQueryString(name) {
-		var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
-		var r = window.location.search.substr(1).match(reg);
-		if (r != null)
-			return unescape(r[2]);
-		return null;
-	}
-
-	var email = GetQueryString("email");
-
-	if (email != null) {
-
-		alert(email + "  已经注册，请直接登录！");
-
-	}
-</script>
 </html>

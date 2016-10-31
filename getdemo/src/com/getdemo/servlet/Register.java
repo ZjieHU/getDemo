@@ -32,11 +32,10 @@ public class Register extends HttpServlet {
 		// 鑾峰彇鍙傛暟
 		String email = request.getParameter("email");
 		String pwd = request.getParameter("pwd");
-		
+
 		
 		if(Dao.checkEmail(email)) {
 			//濡傛灉鐢ㄦ埛瀛樺湪
-			System.out.println("用户已经存在");
 			
 			PrintWriter pw = response.getWriter();
 			
@@ -75,7 +74,7 @@ public class Register extends HttpServlet {
 		
 	    Cookie oItem;  
 	    
-	    oItem = new Cookie("SSO", sSession);  
+	    oItem = new Cookie("cookie", sSession);  
 	    
 	    oItem.setMaxAge(3600 * 24 * 365);
 	    

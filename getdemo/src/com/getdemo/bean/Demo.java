@@ -4,6 +4,25 @@ public class Demo {
 
 	public static final int PAGE_SIZE = 9; // 每页记录数
 
+	private int id;
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	private String prictureurl;
+	
+	public String getPrictureurl() {
+		return prictureurl;
+	}
+
+	public void setPrictureurl(String prictureurl) {
+		this.prictureurl = prictureurl;
+	}
+
 	private String type; // 类型
 	private String name; // 名称
 	private String function; // 功能
@@ -13,7 +32,18 @@ public class Demo {
 	private String updateTime; // 最后更新时间
 	private String author; // 作者
 	private String downOK; // 是否可下载
+	
+	
+	public int getPrice() {
+		return price;
+	}
+
+	public void setPrice(int price) {
+		this.price = price;
+	}
+
 	private String time; // 是否可下载
+	private int price; //价格
 
 	public String getType() {
 		return type;
