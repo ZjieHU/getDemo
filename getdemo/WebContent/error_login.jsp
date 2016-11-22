@@ -37,6 +37,9 @@ div span button {font-family:'微软雅黑';color:#666; font-size:18px;}
 <title>登录</title>
 </head>
 <body>
+	<script type="text/javascript">
+		alert("用户名或密码错误!");
+	</script>
 	<div id="thediv">
 		<div id="ipt">
 			<div id="title" align="center" style="align:center; margin-left:10px;font-size:30px; font-family: '黑体'; margin-top: 5px;">
@@ -45,37 +48,21 @@ div span button {font-family:'微软雅黑';color:#666; font-size:18px;}
 			<br>
 			<span>邮箱</span>
 			<br>
-			<input type="text" id="email" name="email" class="form-control"/><br>
+			<form action="Login" method="get">
+			<input type="text" name="email" class="form-control"/><br>
 			<span>密码</span><br>
-			<input type="password" id="pwd name="pwd" class="form-control"/><br>
-		 	<input type="submit" onclick="Login()" value="登录" style="width:250px;color:#fff; background:#6CBD50" class="btn btn-default" />
+			<input type="password" name="pwd" class="form-control"/><br>
+		 	<input type="submit" value="登录" style="width:250px;color:#fff; background:#6CBD50" class="btn btn-default" />
+			</form>
 		</div>
 		<div style="margin-top:60px; background-color: transparent;">
 			<button type="button" onclick="linktoregister();" style="width:320px; color:#666; background-color: transparent;" class="btn btn-default">创建账号</button>
 		</div>
 	</div>
 	<script type="text/javascript">
-		localhost = "http://localhost";
+		localhost = "http://192.168.191.2";
 		function linktoregister() {
 			window.location.href = localhost+":8080/getdemo/register.jsp";
-		}
-		function Login() {
-			$.post(localhost+":8080/getdemo/Login",
-				{
-					email : $("#email").val(),
-					pwd   : $("#pwd").val()
-				},function (data,status) {
-					if(data == 0) {
-						alert("用户名或密码不正确");
-					}else {
-						year = 365;
-						var exp = new Date();
-						exp.setTime(exp.getTime() + year*24*60*60*1000);
-						document.cookie="cookie="+data+";";
-						window.location=localhost+":8080/getdemo/";
-					}
-				}
-			);
 		}
 	</script>
 </body>

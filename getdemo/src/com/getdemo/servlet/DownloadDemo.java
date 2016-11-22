@@ -9,6 +9,11 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.getdemo.bean.Demo;
+import com.getdemo.bean.Source;
+import com.getdemo.bean.User;
+import com.getdemo.dao.Dao;
+
 public class DownloadDemo extends HttpServlet {
 
 	/**
@@ -38,16 +43,7 @@ public class DownloadDemo extends HttpServlet {
 	 */
 	public void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		response.setContentType("text/html");
-		request.setCharacterEncoding("utf-8");
-		response.setCharacterEncoding("utf-8");
 		
-		Cookie[] cookies = request.getCookies();
-		for(Cookie cookie : cookies) {
-			if(cookie.getName().equals("cookie")) {
-				System.out.println("OK");
-			}
-		}
 	}
 
 	/**
@@ -62,8 +58,45 @@ public class DownloadDemo extends HttpServlet {
 	 */
 	public void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-
+		response.setContentType("text/html");
+		request.setCharacterEncoding("utf-8");
+		response.setCharacterEncoding("utf-8");
 		
+		String email = null;
+		
+		String id = request.getParameter("id");
+		
+		email = request.getParameter("email");
+		
+		PrintWriter pw = response.getWriter();
+		
+		User user = Dao.GetDemoUser(email);
+		
+		if(email == null) {
+			
+			pw.write("0");  //不予下载
+			
+		}else if(user.getDownOK() != null && !user.getDownOK().equals("null")) {
+			
+			Source source = Dao.getSource(id);
+			
+			if(source.getAddress() != null && !source.getAddress().equals("null")) {
+				
+				pw.write(source.getAddress());  //给予下载
+
+			} else {
+				pw.write("1");  //不予下载
+			}
+			
+		}else {
+			
+			pw.write("0");  //不予下载
+		
+		}
+		
+		pw.flush();
+		
+		pw.close();
 		
 	}
 

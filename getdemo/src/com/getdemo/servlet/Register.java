@@ -68,7 +68,7 @@ public class Register extends HttpServlet {
 		return dateFormat.format(now);
 	}
 	
-	private void setReffer(final HttpServletResponse response,
+	public static void setReffer(final HttpServletResponse response,
 			final String userName, final String password) {
 		final String sSession = userName;
 		

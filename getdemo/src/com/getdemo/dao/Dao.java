@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.getdemo.bean.Demo;
+import com.getdemo.bean.Source;
 import com.getdemo.bean.User;
 
 public class Dao {
@@ -30,10 +31,8 @@ public class Dao {
 			String password = "root";
 			conn = DriverManager.getConnection(url, user, password);
 		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return conn;
@@ -170,7 +169,7 @@ public class Dao {
 
 		String pwd = null;
 		Connection conn = getConnection();
-		String sql = "SELECT PWD FROM `user` WHERE Email = '" + email + "'";
+		String sql = "SELECT PWD FROM `user` WHERE Email = '" + email + "'"; System.out.println(sql);
 		try {
 			Statement sta = conn.createStatement();
 			ResultSet rs = sta.executeQuery(sql);
@@ -341,11 +340,69 @@ public class Dao {
 		try {
 			Statement sta = conn.createStatement();
 			sta.executeUpdate(sql);
+			conn.close();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
 
 	}
+	
+	public static User GetDemoUser(String email) {
+		Connection conn = getConnection();
+		
+		String sql = "SELECT * FROM `user` WHERE Email = '" + email + "'";
+		
+		Statement st;
+		User user = new User();
+		try {
+			st = conn.createStatement();
 
+			ResultSet rs = st.executeQuery(sql);
+			
+			while(rs.next()) {
+				user.setDownOK(rs.getString("DownOK"));
+			}
+			
+			conn.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return user;
+	}
+	
+	
+	/**
+	 * @param DownName 资源与Demo的唯一标识符
+	 * @return 返回source资源
+	 */
+	public static Source getSource(String DownName) {
+		Connection conn = getConnection();
+		
+		String sql = "SELECT * FROM `source` WHERE DownName = '" + DownName + "'";
+		
+		Statement st;
+		
+		Source source = new Source();
+		
+		try {
+			st = conn.createStatement();
+
+			ResultSet rs = st.executeQuery(sql);
+			
+			while(rs.next()) {
+				source.setAddress(rs.getString("Address"));
+			}
+			
+			conn.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return source;
+	}
+	
 }

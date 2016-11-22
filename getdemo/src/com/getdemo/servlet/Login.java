@@ -1,19 +1,20 @@
 package com.getdemo.servlet;
 
 import java.io.IOException;
+import java.io.PrintWriter;
+
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
-import com.getdemo.common.Get;
 import com.getdemo.dao.Dao;
 
 @SuppressWarnings("serial")
 public class Login extends HttpServlet {
 
-	public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	@Override
+	public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		response.setContentType("text/html");
 		request.setCharacterEncoding("utf-8");
 		response.setCharacterEncoding("utf-8");
@@ -24,14 +25,19 @@ public class Login extends HttpServlet {
 		
 		String checkpwd = Dao.getPWD(email);
 		
-		if(checkpwd == null) {
-			request.getRequestDispatcher("login.jsp").forward(request, response);
+		PrintWriter pw = response.getWriter();
+		
+		if(checkpwd == null || checkpwd.equals("")) {
+			pw.write("0");
 		}
 		
 		else{
-				request.getRequestDispatcher("/GetDemo").forward(request, response);
-
+			pw.write(email);
 		}
+		
+		pw.flush();
+		
+		pw.close();
 	}
 
 }
